@@ -12,27 +12,21 @@ bash
    git clone <repo-url>
    cd <repo-folder>
 
-2. Access the environment
-   
-To make your environment accessible to collaborators via your GitHub repository, you should share the environment configuration rather than the actual environment itself. This allows your collaborators to recreate the environment on their machines without including the bulky environment files or dependencies in the repo.
-Steps to Share an Environment
-1. Export Your Environment Configuration
+2. Keep Dependencies Up-to-Date:
 
-Export the environment to a configuration file.
-
-For Conda:
-
-    Export the environment to a .yml file:
+    If you or a collaborator add new dependencies, update the configuration file and share it with others.
+        Conda: Update environment.yml:
 
 conda env export --no-builds > environment.yml
 
-    The --no-builds flag ensures portability by excluding platform-specific details.
-    The generated environment.yml might look like this:
+3. Document Changes:
 
-Add environment.yml to your repository:
-
-    git add environment.yml
-    git commit -m "Add environment file"
-    git push origin main
+    Use the README.md or commit messages to notify collaborators when the environment changes.
 
 
+4. Regular Updates:
+
+    Collaborators should periodically update their environments:
+        Conda:
+
+conda env update --file environment.yml --prune
