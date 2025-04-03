@@ -45,3 +45,7 @@ conda env export --no-builds > environment.yml
         Conda:
 
 conda env update --file environment.yml --prune
+
+Website for hosted app: https://dsabirds.pythonanywhere.com
+Username: dsabirds
+Password: HertieDSA2025-birds
