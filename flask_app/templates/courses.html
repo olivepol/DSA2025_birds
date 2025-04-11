@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">All Courses</h1>
+    <table class="table table-striped table-bordered" style="width:100%; overflow-x:auto; overflow-y:auto;">
+        <thead>
+            <tr>
+                <th>Course Title</th>
+                <th>Category</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Location</th>
+                <th>Instructor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td><a href="{{ url_for('course_detail', course_id=course['guid']) }}">{{ course['name'] }}</a></td>
+                <td>{{ course['dvv_kategorie']['#text'] }}</td>
+                <td>{{ course['beginn_datum'] }}</td>
+                <td>{{ course['ende_datum'] }}</td>
+                <td>
+                    {% if course['ortetermine'] and course['ortetermine']['adresse'] %}
+                        {% for location in course['ortetermine']['adresse'] %}
+                            <p>{{ location['strasse'] }}, {{ location['plz'] }} {{ location['ort'] }}</p>
+                        {% endfor %}
+                    {% else %}
+                        Not Available
+                    {% endif %}
+                </td>
+                <td>
+                    {% if course['dozent'] %}
+                        {{ course['dozent']['name'] }} {{ course['dozent']['vorname'] }}
+                    {% else %}
+                        Not Available
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
