@@ -128,10 +128,14 @@ def recommendations():
 
 @app.route('/courses')
 def course_list():
+    search_query = request.args.get('search', '').lower()  # Get the search query from the request
     try:
         with open("web-app/backend/data/courses_sampled.json", "r", encoding="utf-8") as file:
             data = json.load(file)
             courses = data["veranstaltungen"]["veranstaltung"]
+            # Filter courses based on the search query
+            if search_query:
+                courses = [course for course in courses if search_query in course['name'].lower()]
     except Exception as e:
         flash(f"Error loading courses: {e}")
         courses = []
