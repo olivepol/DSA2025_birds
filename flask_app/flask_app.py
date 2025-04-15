@@ -129,7 +129,7 @@ def recommendations():
 @app.route('/courses')
 def course_list():
     try:
-        with open("web-app/backend/data/courses.json", "r", encoding="utf-8") as file:
+        with open("web-app/backend/data/courses_sampled.json", "r", encoding="utf-8") as file:
             data = json.load(file)
             courses = data["veranstaltungen"]["veranstaltung"]
     except Exception as e:
