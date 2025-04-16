@@ -49,7 +49,7 @@
                                     Not Available
                                 {% endif %}
                             </td>
-                            <td>{{ course['anzahl_termine'] }}</td>
+                            <td>{{ course['ortetermine']['termin']|length }}</td>
                             <td>
                                 {% if course['webadresse'] and course['webadresse']['uri'] %}
                                     <a href="{{ course['webadresse']['uri'] }}">Book Course</a>
