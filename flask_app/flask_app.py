@@ -130,7 +130,7 @@ def recommendations():
 def course_list():
     search_query = request.args.get('search', '').lower()
     try:
-        with open("web-app/backend/data/courses_sampled.json", "r", encoding="utf-8") as file:
+        with open("flask_app/data/courses_sampled.json", "r", encoding="utf-8") as file:
             data = json.load(file)
             courses = data["veranstaltungen"]["veranstaltung"]
             # Normalize schlagwort to always be a list
