@@ -4,9 +4,10 @@
 <div class="container my-5">
     <h1 class="text-left mb-4">All Courses</h1>
 
-    <!-- Search Bar -->
-    <form method="GET" action="{{ url_for('course_list') }}" class="mb-4">
+     <!-- Search Bar --> 
+     <form method="GET" action="{{ url_for('course_list') }}" class="mb-4">
         <div class="row g-3">
+        
             <!-- Search Field -->
             <div class="col-md-6 col-lg-4">
                 <div class="input-group">
@@ -98,14 +99,14 @@
                 </div>
             </div>
 
-            <!-- Budget Range -->
+            <!-- Budget imput -->
             <div class="col-md-6 col-lg-4">
                 <div class="input-group">
-                    <label class="input-group-text" for="min_budget">Budget Range</label>
-                    <input type="number" class="form-control" id="min_budget" name="min_budget" placeholder="Min Budget" value="{{ request.args.get('min_budget', '') }}">
-                    <input type="number" class="form-control" id="max_budget" name="max_budget" placeholder="Max Budget" value="{{ request.args.get('max_budget', '') }}">
+                  <label class="input-group-text" for="budget">Budget</label>
+                  <input type="number" class="form-control" id="budget" name="budget" placeholder="Enter Budget" value="{{ request.args.get('budget', '') }}">
+                  <span class="input-group-text">€</span>
                 </div>
-            </div>
+              </div>
 
             <!-- District Filter -->
             <div class="col-md-6 col-lg-4">
@@ -263,18 +264,7 @@
                 </div>
             </div>
 
-            <!-- Time of Course -->
-            <div class="col-md-6 col-lg-4">
-                <div class="input-group">
-                    <label class="input-group-text">Time of Course</label>
-                    <div id="time_slider" class="w-100"></div>
-                    <input type="hidden" id="start_time" name="start_time" value="8">
-                    <input type="hidden" id="end_time" name="end_time" value="18">
-                </div>
-            </div>
-        </div>
-    </form>
-  
+
     <!-- Selected Filters Display -->
     <div class="row g-2">
         <!-- District Filter -->
@@ -316,6 +306,12 @@
                 </span>
             </div>
         {% endif %}
+
+          <!-- Results count -->
+     <div class="mb-3">
+        <h5>{{ courses|length }} courses found</h5>
+    </div>
+
 
         <!-- Time of Course Filter -->
         {% if request.args.get('start_time') or request.args.get('end_time') %}
