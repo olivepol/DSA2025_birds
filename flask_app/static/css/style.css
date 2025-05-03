@@ -1,3 +1,35 @@
 .featured-categories {
     background-color: #eaf4fc; /* Very light blue */
 }
+
+button#districtDropdown {
+    /* styles that will only apply to the button with id="districtDropdown" */
+    width: 315px;
+  }
+
+button#weekdayDropdown {
+    /* styles that will only apply to the button with id="weekdayDropdown" */
+    width: 275px;
+  }
+/* Adjust the input group for time slider */
+.input-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+/* time slider wider */
+#time_slider {
+    width: calc(100% - 20px); /* Take full width minus small margins */
+    min-width: 300px; /* Set a minimum width */
+    display: inline-block;
+    margin: 0 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  /* make container element wider */
+  .input-group:has(#time_slider) {
+    width: 305%;
+    max-width: 3800%;
+  }
