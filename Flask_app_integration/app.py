@@ -9,9 +9,7 @@ app = Flask(__name__)
 @app.route("/courses", methods=["GET", "POST"])
 def course_list():
     loader = AssetLoader(
-        model_path=os.path.abspath("app/saved_sentence_transformer_model"),
-        df_path=os.path.abspath("app/Processed_data_for_app.pkl"),
-        embeddings_path=os.path.abspath("app/course_embeddings.npy")
+        df_path=os.path.abspath("app/Processed_data_for_app.pkl")
     )
 
     if request.method == "POST":
@@ -27,9 +25,7 @@ def course_list():
                 user_budget=user_budget,
                 user_gender=user_gender,
                 user_target_groups=target_groups,
-                model=loader.get_model(),
-                df=loader.get_dataframe(),
-                course_embeddings=loader.get_embeddings()
+                df=loader.get_dataframe()
             )
         except Exception as e:
             error_msg = f"Search failed: {e}"
@@ -48,3 +44,5 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+    

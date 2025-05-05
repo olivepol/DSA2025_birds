@@ -18,7 +18,7 @@ class PlatformPreferenceRanker:
         self.gender_col = 'gap_to_80_percent_women' if self.user_gender == 'female' else 'gap_to_80_percent_men'
 
         if not self.user_gender or selected_target_groups is None:
-            raise ValueError("Please fill in both gender and target group fields before proceeding.")
+            raise ValueError("Please fill in gender field before proceeding.")
 
         self.selected_target_groups = selected_target_groups.copy()
         if self.user_gender == 'female' and "Women" not in self.selected_target_groups:
