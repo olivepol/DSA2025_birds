@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-left mb-4">All Courses</h1>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{{ url_for('course_list') }}" class="mb-4">
+        <div class="row g-3">
+            <!-- Search Field -->
+            <div class="col-12">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search for courses..." value="{{ request.args.get('search', '') }}">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table table-striped table-bordered" style="width:100%; overflow-x:auto; overflow-y:auto;">
+        <thead>
+            <tr>
+                <th>Course Title</th>
+                <th>District</th>
+                <th>Location</th>
+                <th>Course Duration</th>
+                <th>Session Times</th>
+                <th>No. of Sessions</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+                {% if course['ortetermine'] and course['ortetermine']['adresse'] and course['ortetermine']['termin'] %}
+                    {% if course['ortetermine']['adresse']|length > 0 and course['ortetermine']['termin']|length > 0 %}
+                        <tr>
+                            <td>{{ course['name'] }}</td>
+                            <td>{{ course['bezirk'] }}</td>
+                            <td>
+                                {% if course['ortetermine']['adresse'][0] %}
+                                    {{ course['ortetermine']['adresse'][0]['strasse'] }},
+                                    {{ course['ortetermine']['adresse'][0]['plz'] }} {{ course['ortetermine']['adresse'][0]['ort'] }}
+                                {% else %}
+                                    Not Available
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ course['beginn_datum'] }} to {{ course['ende_datum'] }}
+                            </td>
+                            <td>
+                                {% if course['ortetermine']['termin'][0] %}
+                                    {{ course['ortetermine']['termin'][0]['beginn_uhrzeit'] }} to {{ course['ortetermine']['termin'][0]['ende_uhrzeit'] }}
+                                {% else %}
+                                    Not Available
+                                {% endif %}
+                            </td>
+                            <td>{{ course['ortetermine']['termin']|length }}</td>
+                            <td>
+                                {% if course['webadresse'] and course['webadresse']['uri'] %}
+                                    <a href="{{ course['webadresse']['uri'] }}">Book Course</a>
+                                {% else %}
+                                    Not Available
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="7">No sessions or locations available for this course.</td></tr>
+                    {% endif %}
+                {% else %}
+                    <tr><td colspan="7">No sessions or locations available for this course.</td></tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Include noUiSlider -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
+
+<script>
+    // Initialize noUiSlider for Time of Course
+    const timeSlider = document.getElementById('time_slider');
+    noUiSlider.create(timeSlider, {
+        start: [10, 18], // Default start and end times
+        connect: true,
+        range: {
+            min: 0,
+            max: 24
+        },
+        step: 1,
+        tooltips: [true, true],
+        format: {
+            to: function (value) {
+                return `${Math.floor(value)}:00`;
+            },
+            from: function (value) {
+                return Number(value.replace(':00', ''));
+            }
+        }
+    });
+
+    // Update hidden inputs and display values for Time of Course
+    timeSlider.noUiSlider.on('update', function (values) {
+        document.getElementById('start_time_display').innerText = values[0];
+        document.getElementById('end_time_display').innerText = values[1];
+        document.getElementById('start_time').value = values[0].replace(':00', '');
+        document.getElementById('end_time').value = values[1].replace(':00', '');
+    });    
+
+    // Function to toggle all district checkboxes
+    function toggleAllDistricts(selectAllCheckbox) {
+        const districtCheckboxes = document.querySelectorAll('.district-checkbox');
+        districtCheckboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+
+    // Function to toggle all target group checkboxes
+    function toggleAllTargetGroups(selectAllCheckbox) {
+        const targetGroupCheckboxes = document.querySelectorAll('.target-group-checkbox');
+        targetGroupCheckboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+
+    // Function to toggle all weekday checkboxes
+    function toggleAllWeekdays(selectAllCheckbox) {
+        const weekdayCheckboxes = document.querySelectorAll('.weekday-checkbox');
+        weekdayCheckboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+</script>
+{% endblock %}
