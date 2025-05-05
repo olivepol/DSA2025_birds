@@ -128,18 +128,27 @@ def recommendations():
 
 @app.route('/courses')
 def course_list():
-    search_query = request.args.get('search', '')
-    filtered_courses = courses
+    search_query = request.args.get('search', '').lower()
+    try:
+        with open("flask_app/data/courses_sampled.json", "r", encoding="utf-8") as file:
+            data = json.load(file)
+            courses = data["veranstaltungen"]["veranstaltung"]
+            # Normalize schlagwort to always be a list
+            for course in courses:
+                if not isinstance(course.get('schlagwort'), list):
+                    course['schlagwort'] = []
+            # Filter courses
+            if search_query:
+                courses = [
+                    course for course in courses
+                    if search_query in course['name'].lower() or
+                       any(search_query in str(tag).lower() for tag in course['schlagwort'])
+                ]
+    except Exception as e:
+        flash(f"Error loading courses: {e}")
+        courses = []
     
-    if search_query:
-        filtered_courses = [
-            course for course in courses 
-            if search_query.lower() in course['title'].lower() or 
-               search_query.lower() in course['category'].lower() or
-               any(search_query.lower() in tag.lower() for tag in course['tags'])
-        ]
-    
-    return render_template('courses.html', title="All Courses", courses=filtered_courses)
+    return render_template('courses.html', title="All Courses", courses=courses)
 
 @app.route('/course/<int:course_id>')
 def course_detail(course_id):
