@@ -1,11 +1,15 @@
 # app.py
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from app.processor import process_user_inputs
+from app.assets_loader import AssetLoader
 import pandas as pd
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Change this to a random secret key in production
 
 # Mock user database - replace with a real database in production
 users = {}
@@ -126,29 +130,41 @@ def recommendations():
     return render_template('recommendations.html', title="Your Course Recommendations", 
                           courses=matched_courses, interests=user_interests)
 
-@app.route('/courses')
+@app.route("/courses", methods=["GET", "POST"])
 def course_list():
-    search_query = request.args.get('search', '').lower()
-    try:
-        with open("flask_app/data/courses_sampled.json", "r", encoding="utf-8") as file:
-            data = json.load(file)
-            courses = data["veranstaltungen"]["veranstaltung"]
-            # Normalize schlagwort to always be a list
-            for course in courses:
-                if not isinstance(course.get('schlagwort'), list):
-                    course['schlagwort'] = []
-            # Filter courses
-            if search_query:
-                courses = [
-                    course for course in courses
-                    if search_query in course['name'].lower() or
-                       any(search_query in str(tag).lower() for tag in course['schlagwort'])
-                ]
-    except Exception as e:
-        flash(f"Error loading courses: {e}")
-        courses = []
-    
-    return render_template('courses.html', title="All Courses", courses=courses)
+    loader = AssetLoader(
+        model_path=os.path.abspath("app/saved_sentence_transformer_model"),
+        df_path=os.path.abspath("app/Processed_data_for_app.pkl"),
+        embeddings_path=os.path.abspath("app/course_embeddings.npy")
+    )
+
+    if request.method == "POST":
+        try:
+            user_query = request.form.get("search", "")
+            budget_input = request.form.get("budget", "").strip()
+            user_budget = float(budget_input) if budget_input else 0
+            user_gender = request.form.get("gender", "")
+            target_groups = request.form.getlist("target_group")
+
+            results_df = process_user_inputs(
+                user_query=user_query,
+                user_budget=user_budget,
+                user_gender=user_gender,
+                user_target_groups=target_groups,
+                model=loader.get_model(),
+                df=loader.get_dataframe(),
+                course_embeddings=loader.get_embeddings()
+            )
+        except Exception as e:
+            error_msg = f"Search failed: {e}"
+            results_df = loader.get_dataframe()
+            return render_template("courses.html", courses=results_df.to_dict(orient="records"), error=error_msg)
+
+        return render_template("courses.html", courses=results_df.to_dict(orient="records"))
+
+    # Default GET: show full course list
+    full_df = loader.get_dataframe()
+    return render_template("courses.html", courses=full_df.to_dict(orient="records"))
 
 @app.route('/course/<int:course_id>')
 def course_detail(course_id):

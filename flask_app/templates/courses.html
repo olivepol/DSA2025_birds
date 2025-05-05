@@ -4,9 +4,10 @@
 <div class="container my-5">
     <h1 class="text-left mb-4">All Courses</h1>
 
-    <!-- Search Bar -->
-    <form method="GET" action="{{ url_for('course_list') }}" class="mb-4">
+     <!-- Search Bar --> 
+     <form method="GET" action="{{ url_for('course_list') }}" class="mb-4">
         <div class="row g-3">
+        
             <!-- Search Field -->
             <div class="col-md-6 col-lg-4">
                 <div class="input-group">
@@ -98,203 +99,21 @@
                 </div>
             </div>
 
-            <!-- Budget Range -->
+            <!-- Budget imput -->
             <div class="col-md-6 col-lg-4">
                 <div class="input-group">
-                    <label class="input-group-text" for="min_budget">Budget Range</label>
-                    <input type="number" class="form-control" id="min_budget" name="min_budget" placeholder="Min Budget" value="{{ request.args.get('min_budget', '') }}">
-                    <input type="number" class="form-control" id="max_budget" name="max_budget" placeholder="Max Budget" value="{{ request.args.get('max_budget', '') }}">
+                  <label class="input-group-text" for="budget">Budget</label>
+                  <input type="number" class="form-control" id="budget" name="budget" placeholder="Enter Budget" value="{{ request.args.get('budget', '') }}">
+                  <span class="input-group-text">€</span>
                 </div>
-            </div>
+              </div>
 
-            <!-- District Filter -->
-            <div class="col-md-6 col-lg-4">
-                <div class="input-group w-100">
-                    <label class="input-group-text">District</label>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="districtDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Select Districts
-                        </button>
-                        <ul class="dropdown-menu p-3" aria-labelledby="districtDropdown" style="max-height: 300px; overflow-y: auto;">
-                            <!-- Select All Option -->
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="select_all_districts" onclick="toggleAllDistricts(this)">
-                                    <label class="form-check-label" for="select_all_districts">Select All</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Reinickendorf" id="district_reinickendorf" {% if 'Reinickendorf' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_reinickendorf">Reinickendorf</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Pankow" id="district_pankow" {% if 'Pankow' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_pankow">Pankow</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Marzahn-Hellersdorf" id="district_marzahn" {% if 'Marzahn-Hellersdorf' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_marzahn">Marzahn-Hellersdorf</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Neukölln" id="district_neukoelln" {% if 'Neukölln' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_neukoelln">Neukölln</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Tempelhof-Schöneberg" id="district_tempelhof" {% if 'Tempelhof-Schöneberg' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_tempelhof">Tempelhof-Schöneberg</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Spandau" id="district_spandau" {% if 'Spandau' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_spandau">Spandau</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Steglitz-Zehlendorf" id="district_steglitz" {% if 'Steglitz-Zehlendorf' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_steglitz">Steglitz-Zehlendorf</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Mitte" id="district_mitte" {% if 'Mitte' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_mitte">Mitte</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Charlottenburg-Wilmersdorf" id="district_charlottenburg" {% if 'Charlottenburg-Wilmersdorf' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_charlottenburg">Charlottenburg-Wilmersdorf</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Friedrichshain-Kreuzberg" id="district_friedrichshain" {% if 'Friedrichshain-Kreuzberg' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_friedrichshain">Friedrichshain-Kreuzberg</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Lichtenberg" id="district_lichtenberg" {% if 'Lichtenberg' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_lichtenberg">Lichtenberg</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input district-checkbox" type="checkbox" name="district" value="Treptow-Köpenick" id="district_treptow" {% if 'Treptow-Köpenick' in request.args.getlist('district') %}checked{% endif %}>
-                                    <label class="form-check-label" for="district_treptow">Treptow-Köpenick</label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Weekday Filter -->
-            <div class="col-md-6 col-lg-4">
-                <div class="input-group">
-                    <label class="input-group-text">Weekday</label>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="weekdayDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Select Weekdays
-                        </button>
-                        <ul class="dropdown-menu p-3" aria-labelledby="weekdayDropdown" style="max-height: 300px; overflow-y: auto;">
-                            <!-- Select All Option -->
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="select_all_weekdays" onclick="toggleAllWeekdays(this)">
-                                    <label class="form-check-label" for="select_all_weekdays">Select All</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input weekday-checkbox" type="checkbox" name="weekday" value="Monday" id="weekday_monday" {% if 'Monday' in request.args.getlist('weekday') %}checked{% endif %}>
-                                    <label class="form-check-label" for="weekday_monday">Monday</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input weekday-checkbox" type="checkbox" name="weekday" value="Tuesday" id="weekday_tuesday" {% if 'Tuesday' in request.args.getlist('weekday') %}checked{% endif %}>
-                                    <label class="form-check-label" for="weekday_tuesday">Tuesday</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input weekday-checkbox" type="checkbox" name="weekday" value="Wednesday" id="weekday_wednesday" {% if 'Wednesday' in request.args.getlist('weekday') %}checked{% endif %}>
-                                    <label class="form-check-label" for="weekday_wednesday">Wednesday</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input weekday-checkbox" type="checkbox" name="weekday" value="Thursday" id="weekday_thursday" {% if 'Thursday' in request.args.getlist('weekday') %}checked{% endif %}>
-                                    <label class="form-check-label" for="weekday_thursday">Thursday</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input weekday-checkbox" type="checkbox" name="weekday" value="Friday" id="weekday_friday" {% if 'Friday' in request.args.getlist('weekday') %}checked{% endif %}>
-                                    <label class="form-check-label" for="weekday_friday">Friday</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input weekday-checkbox" type="checkbox" name="weekday" value="Saturday" id="weekday_saturday" {% if 'Saturday' in request.args.getlist('weekday') %}checked{% endif %}>
-                                    <label class="form-check-label" for="weekday_saturday">Saturday</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input weekday-checkbox" type="checkbox" name="weekday" value="Sunday" id="weekday_sunday" {% if 'Sunday' in request.args.getlist('weekday') %}checked{% endif %}>
-                                    <label class="form-check-label" for="weekday_sunday">Sunday</label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Time of Course -->
-            <div class="col-md-6 col-lg-4">
-                <div class="input-group">
-                    <label class="input-group-text">Time of Course</label>
-                    <div id="time_slider" class="w-100"></div>
-                    <input type="hidden" id="start_time" name="start_time" value="8">
-                    <input type="hidden" id="end_time" name="end_time" value="18">
-                </div>
-            </div>
-        </div>
-    </form>
-  
     <!-- Selected Filters Display -->
     <div class="row g-2">
-        <!-- District Filter -->
-        {% if request.args.getlist('district') %}
-            <div class="col-auto">
-                <span class="badge bg-light text-dark">Districts: {{ request.args.getlist('district')|join(', ') }}</span>
-            </div>
-        {% endif %}
-
         <!-- Target Group Filter -->
         {% if request.args.getlist('target_group') %}
             <div class="col-auto">
                 <span class="badge bg-light text-dark">Target Groups: {{ request.args.getlist('target_group')|join(', ') }}</span>
-            </div>
-        {% endif %}
-
-        <!-- Weekday Filter -->
-        {% if request.args.getlist('weekday') %}
-            <div class="col-auto">
-                <span class="badge bg-light text-dark">Weekdays: {{ request.args.getlist('weekday')|join(', ') }}</span>
             </div>
         {% endif %}
 
@@ -305,29 +124,9 @@
             </div>
         {% endif %}
 
-        <!-- Budget Range Filter -->
-        {% if request.args.get('min_budget') or request.args.get('max_budget') %}
-            <div class="col-auto">
-                <span class="badge bg-light text-dark">
-                    Budget: 
-                    {% if request.args.get('min_budget') %}Min {{ request.args.get('min_budget') }}{% endif %}
-                    {% if request.args.get('min_budget') and request.args.get('max_budget') %} - {% endif %}
-                    {% if request.args.get('max_budget') %}Max {{ request.args.get('max_budget') }}{% endif %}
-                </span>
-            </div>
-        {% endif %}
-
-        <!-- Time of Course Filter -->
-        {% if request.args.get('start_time') or request.args.get('end_time') %}
-            <div class="col-auto">
-                <span class="badge bg-light text-dark">
-                    Time: 
-                    {% if request.args.get('start_time') %}From {{ request.args.get('start_time') }}:00{% endif %}
-                    {% if request.args.get('start_time') and request.args.get('end_time') %} - {% endif %}
-                    {% if request.args.get('end_time') %}To {{ request.args.get('end_time') }}:00{% endif %}
-                </span>
-            </div>
-        {% endif %}
+          <!-- Results count -->
+     <div class="mb-3">
+        <h5>{{ courses|length }} courses found</h5>
     </div>
 
     <table class="table table-striped table-bordered" style="width:100%; overflow-x:auto; overflow-y:auto;">
@@ -336,6 +135,7 @@
                 <th>Course Title</th>
                 <th>District</th>
                 <th>Location</th>
+                <th>Price</th>
                 <th>Course Duration</th>
                 <th>Session Times</th>
                 <th>No. of Sessions</th>
@@ -355,6 +155,14 @@
                                     {{ course['ortetermine']['adresse'][0]['plz'] }} {{ course['ortetermine']['adresse'][0]['ort'] }}
                                 {% else %}
                                     Not Available
+                                {% endif %}
+                            </td>
+                            <!-- Price column - Fixed -->
+                            <td>
+                                {% if course['preis'] and course['preis']['betrag'] %}
+                                     {{ course['preis']['betrag'] }}€
+                                {% else %}
+                                     Not Available
                                 {% endif %}
                             </td>
                             <td>
@@ -386,63 +194,4 @@
         </tbody>
     </table>
 </div>
-
-<!-- Include noUiSlider -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
-
-<script>
-    // Initialize noUiSlider for Time of Course
-    const timeSlider = document.getElementById('time_slider');
-    noUiSlider.create(timeSlider, {
-        start: [10, 18], // Default start and end times
-        connect: true,
-        range: {
-            min: 0,
-            max: 24
-        },
-        step: 1,
-        tooltips: [true, true],
-        format: {
-            to: function (value) {
-                return `${Math.floor(value)}:00`;
-            },
-            from: function (value) {
-                return Number(value.replace(':00', ''));
-            }
-        }
-    });
-
-    // Update hidden inputs and display values for Time of Course
-    timeSlider.noUiSlider.on('update', function (values) {
-        document.getElementById('start_time_display').innerText = values[0];
-        document.getElementById('end_time_display').innerText = values[1];
-        document.getElementById('start_time').value = values[0].replace(':00', '');
-        document.getElementById('end_time').value = values[1].replace(':00', '');
-    });    
-
-    // Function to toggle all district checkboxes
-    function toggleAllDistricts(selectAllCheckbox) {
-        const districtCheckboxes = document.querySelectorAll('.district-checkbox');
-        districtCheckboxes.forEach(checkbox => {
-            checkbox.checked = selectAllCheckbox.checked;
-        });
-    }
-
-    // Function to toggle all target group checkboxes
-    function toggleAllTargetGroups(selectAllCheckbox) {
-        const targetGroupCheckboxes = document.querySelectorAll('.target-group-checkbox');
-        targetGroupCheckboxes.forEach(checkbox => {
-            checkbox.checked = selectAllCheckbox.checked;
-        });
-    }
-
-    // Function to toggle all weekday checkboxes
-    function toggleAllWeekdays(selectAllCheckbox) {
-        const weekdayCheckboxes = document.querySelectorAll('.weekday-checkbox');
-        weekdayCheckboxes.forEach(checkbox => {
-            checkbox.checked = selectAllCheckbox.checked;
-        });
-    }
-</script>
 {% endblock %}
