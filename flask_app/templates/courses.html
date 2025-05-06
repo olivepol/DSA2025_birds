@@ -11,7 +11,7 @@
             <!-- Search Field -->
             <div class="col-md-6 col-lg-4">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Search for courses..." value="{{ request.args.get('search', '') }}">
+                    <input type="text" name="search" class="form-control" placeholder="Search for courses..." value="{{ request.form.get('search', '') }}">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </div>
@@ -48,49 +48,49 @@
                             <!-- Individual Target Groups -->
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="People with a migration background" id="target_group_migration" {% if 'People with a migration background' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="People with a migration background" id="target_group_migration" {% if 'People with a migration background' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_migration">People with a migration background</label>
                                 </div>
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Illiterate people" id="target_group_illiterate" {% if 'Illiterate people' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Illiterate people" id="target_group_illiterate" {% if 'Illiterate people' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_illiterate">Illiterate people</label>
                                 </div>
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Women" id="target_group_women" {% if 'Women' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Women" id="target_group_women" {% if 'Women' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_women">Women</label>
                                 </div>
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="People with disabilities" id="target_group_disabilities" {% if 'People with disabilities' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="People with disabilities" id="target_group_disabilities" {% if 'People with disabilities' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_disabilities">People with disabilities</label>
                                 </div>
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Older adults / older people" id="target_group_older_adults" {% if 'Older adults / older people' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Older adults / older people" id="target_group_older_adults" {% if 'Older adults / older people' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_older_adults">Older adults / older people</label>
                                 </div>
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Other target groups" id="target_group_other" {% if 'Other target groups' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Other target groups" id="target_group_other" {% if 'Other target groups' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_other">Other target groups</label>
                                 </div>
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Children" id="target_group_children" {% if 'Children' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Children" id="target_group_children" {% if 'Children' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_children">Children</label>
                                 </div>
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Adolescents / young people" id="target_group_adolescents" {% if 'Adolescents / young people' in request.args.getlist('target_group') %}checked{% endif %}>
+                                    <input class="form-check-input target-group-checkbox" type="checkbox" name="target_group" value="Adolescents / young people" id="target_group_adolescents" {% if 'Adolescents / young people' in request.form.getlist('target_group') %}checked{% endif %}>
                                     <label class="form-check-label" for="target_group_adolescents">Adolescents / young people</label>
                                 </div>
                             </li>
@@ -103,7 +103,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="input-group">
                   <label class="input-group-text" for="budget">Budget</label>
-                  <input type="number" class="form-control" id="budget" name="budget" placeholder="Enter Budget" value="{{ request.args.get('budget', '') }}">
+                  <input type="number" class="form-control" id="budget" name="budget" placeholder="Enter Budget" value="{{ request.form.get('budget', '') }}">
                   <span class="input-group-text">€</span>
                 </div>
               </div>
@@ -111,16 +111,16 @@
     <!-- Selected Filters Display -->
     <div class="row g-2">
         <!-- Target Group Filter -->
-        {% if request.args.getlist('target_group') %}
+        {% if request.form.getlist('target_group') %}
             <div class="col-auto">
-                <span class="badge bg-light text-dark">Target Groups: {{ request.args.getlist('target_group')|join(', ') }}</span>
+                <span class="badge bg-light text-dark">Target Groups: {{ request.form.getlist('target_group')|join(', ') }}</span>
             </div>
         {% endif %}
 
         <!-- Gender Filter -->
-        {% if request.args.get('gender') %}
+        {% if request.form.get('gender') %}
             <div class="col-auto">
-                <span class="badge bg-light text-dark">Gender: {{ request.args.get('gender') }}</span>
+                <span class="badge bg-light text-dark">Gender: {{ request.form.get('gender') }}</span>
             </div>
         {% endif %}
 

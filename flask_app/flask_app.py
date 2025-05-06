@@ -133,7 +133,7 @@ def recommendations():
 @app.route("/courses", methods=["GET", "POST"])
 def course_list():
     loader = AssetLoader(
-        df_path=os.path.abspath("flask_app/app/Processed_data_for_app.pkl")
+        df_path=os.path.abspath("app/Processed_data_for_app.pkl")
     )
 
     if request.method == "POST":
@@ -154,7 +154,7 @@ def course_list():
         except Exception as e:
             error_msg = f"Search failed: {e}"
             results_df = loader.get_dataframe()
-            return render_template("courses.html", courses=results_df.to_dict(orient="records"), error=error_msg)
+            return render_template("courses.html", courses=results_df.to_dict(orient="records"), error=error_msg, form_data = request.form)
 
         return render_template("courses.html", courses=results_df.to_dict(orient="records"))
 
