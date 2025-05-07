@@ -135,6 +135,8 @@ def course_list():
     loader = AssetLoader(
         df_path=os.path.abspath("app/Processed_data_for_app.pkl")
     )
+    # validation
+    errors = []
 
     if request.method == "POST":
         try:
@@ -144,6 +146,34 @@ def course_list():
             user_gender = request.form.get("gender", "")
             target_groups = request.form.getlist("target_group")
 
+            # Debug prints
+            print(f"Gender: '{user_gender}'")
+            print(f"Target groups: {target_groups}")
+
+            # validate
+            # Error: check if gender is selected
+            if not user_gender:
+                errors.append("Please select a gender")
+            
+            # Error: check if target_groups are selected
+            if not target_groups or len(target_groups) == 0:
+                errors.append("Please select at least one") # error message
+
+            # Error: check if budget is a number
+            if budget_input and not budget_input.isdigit():
+                errors.append("Budget must be a number") # error message       
+            
+            print(f"DEBUG - Errors after validation: {errors}")
+            
+            if errors:
+                full_df = loader.get_dataframe()
+                return render_template(
+                    "courses.html", 
+                    courses=full_df.to_dict(orient="records"), 
+                    error=errors, 
+                    form_data = request.form
+                    )
+            # if validation passed, process the user inputs
             results_df = process_user_inputs(
                 user_query=user_query,
                 user_budget=user_budget,

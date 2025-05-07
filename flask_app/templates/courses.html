@@ -8,13 +8,7 @@
      <form method="POST" action="{{ url_for('course_list') }}" class="mb-4">
         <div class="row g-3">
         
-            <!-- Search Field -->
-            <div class="col-12">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Search for courses..." value="{{ request.form.get('search', '') }}">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </div>
-            </div>
+ 
 
 
             <!-- Gender Filter -->
@@ -33,10 +27,10 @@
             <!-- Target Group Filter -->
             <div class="col-md-6 col-lg-4">
                 <div class="input-group w-100" style="width: 100%;">
-                    <label class="input-group-text">Target Group</label>
+                    <label class="input-group-text">I identify with... </label>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="targetGroupDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Select Target Groups
+                             Select one or more
                         </button>
                         <ul class="dropdown-menu p-3" aria-labelledby="targetGroupDropdown" style="max-height: 300px; overflow-y: auto;">
                             <!-- Select All Option -->
@@ -108,6 +102,13 @@
                   <span class="input-group-text">€</span>
                 </div>
               </div>
+               <!-- Search Field -->
+               <div class="col-12">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search for courses..." value="{{ request.form.get('search', '') }}">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>          
 
     <!-- Selected Filters Display -->
     <div class="row g-2">
@@ -185,4 +186,69 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the form element
+    const form = document.querySelector('form');
+    
+    // Add submit event listener to the form
+    form.addEventListener('submit', function(event) {
+      let hasErrors = false;
+      
+      // Check if any target group checkboxes are checked
+      const targetGroups = document.querySelectorAll('input[name="target_group"]:checked');
+      
+      // If no target groups are selected, prevent form submission and show an error
+      if (targetGroups.length === 0) {
+        hasErrors = true;
+        
+        // Remove any existing error message
+        const existingError = document.getElementById('target-group-error');
+        if (existingError) {
+          existingError.remove();
+        }
+        
+        // Create and show the error message
+        const errorDiv = document.createElement('div');
+        errorDiv.id = 'target-group-error';
+        errorDiv.className = 'alert alert-danger mt-2';
+        errorDiv.innerText = 'Please select at least one option';
+        
+        // Insert the error after the target group dropdown
+        const targetGroupContainer = document.querySelector('.dropdown').parentElement;
+        targetGroupContainer.parentNode.insertBefore(errorDiv, targetGroupContainer.nextSibling);
+      }
+      
+      // Check if budget field is empty or invalid
+      const budgetField = document.getElementById('budget');
+      const budgetValue = budgetField.value.trim();
+      
+      if (budgetValue === '') {
+        hasErrors = true;
+        
+        // Remove any existing error message
+        const existingError = document.getElementById('budget-error');
+        if (existingError) {
+          existingError.remove();
+        }
+        
+        // Create and show the error message
+        const errorDiv = document.createElement('div');
+        errorDiv.id = 'budget-error';
+        errorDiv.className = 'alert alert-danger mt-2';
+        errorDiv.innerText = 'Please enter a budget amount';
+        
+        // Insert the error after the budget input
+        const budgetContainer = budgetField.closest('.input-group');
+        budgetContainer.parentNode.insertBefore(errorDiv, budgetContainer.nextSibling);
+      }
+      
+      // If there are any errors, prevent form submission
+      if (hasErrors) {
+        event.preventDefault();
+      }
+    });
+  });
+  </script>
 {% endblock %}
