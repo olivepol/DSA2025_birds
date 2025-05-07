@@ -9,12 +9,13 @@
         <div class="row g-3">
         
             <!-- Search Field -->
-            <div class="col-md-6 col-lg-4">
+            <div class="col-12">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" placeholder="Search for courses..." value="{{ request.form.get('search', '') }}">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </div>
+
 
             <!-- Gender Filter -->
             <div class="col-md-6 col-lg-4">
@@ -128,6 +129,9 @@
      <div class="mb-3">
         <h5>{{ courses|length }} courses found</h5>
     </div>
+  </div>
+</form>
+
 
     <!-- Courses Table -->
   <table class="table table-bordered table-hover mt-4">
