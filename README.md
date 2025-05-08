@@ -203,7 +203,7 @@ flask_app/
 │       ├-- matching.py
 │       └-- platform_ranker.py
 ```
-
+***Note: The tests we conducted can be found in test_algorithm.py.
 ---
 
 ## Authors
