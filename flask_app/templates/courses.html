@@ -2,16 +2,16 @@
 
 {% block content %}
 <div class="container my-5">
-  <h1 class="text-left mb-4">Course List</h1>
+  <h1 class="text-left mb-4">Course List 📚</h1>
 
   {% if error %}
     {% if "no matches" in error|lower %}
       <div class="alert alert-warning mt-2" role="alert">
-        {{ error }}
+        ⚠️ {{ error }}
       </div>
     {% else %}
       <div class="alert alert-danger" role="alert">
-        {{ error }}
+        ❌ {{ error }}
       </div>
     {% endif %}
   {% endif %}
@@ -22,7 +22,7 @@
       <!-- Gender Filter -->
       <div class="col-md-6 col-lg-4">
         <div class="input-group">
-          <label class="input-group-text" for="gender">Gender</label>
+          <label class="input-group-text" for="gender">Gender 👥</label>
           <select class="form-select" id="gender" name="gender">
             <option value="" {% if not form_data.get('gender') %}selected{% endif %}>Select gender</option>
             <option value="female" {% if form_data.get('gender') == 'female' %}selected{% endif %}>Female</option>
@@ -35,7 +35,7 @@
       <!-- Target Group Filter -->
       <div class="col-md-6 col-lg-4">
         <div class="input-group w-100">
-          <label class="input-group-text">I identify with... </label>
+          <label class="input-group-text">I identify with... 🎯</label>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="targetGroupDropdown"
               data-bs-toggle="dropdown" aria-expanded="false">
@@ -81,7 +81,7 @@
       <!-- Budget input -->
       <div class="col-md-6 col-lg-4">
         <div class="input-group">
-          <label class="input-group-text" for="budget">Budget</label>
+          <label class="input-group-text" for="budget">Budget 💰</label>
           <input type="number" class="form-control" id="budget" name="budget" placeholder="Enter Budget"
             value="{{ form_data.get('budget', '') }}">
           <span class="input-group-text">€</span>
@@ -91,9 +91,9 @@
       <!-- Search Field -->
       <div class="col-12">
         <div class="input-group">
-          <input type="text" name="search" class="form-control" placeholder="Search for courses..."
+          <input type="text" name="search" class="form-control" placeholder="Search for courses... 🔍"
             value="{{ form_data.get('search', '') }}">
-          <button class="btn btn-primary" type="submit">Search</button>
+          <button class="btn btn-primary" type="submit">Search 🔎</button>
         </div>
       </div>
 
@@ -101,19 +101,19 @@
       <div class="row g-2 mt-2">
         {% if form_data.getlist('target_group') %}
         <div class="col-auto">
-          <span class="badge bg-light text-dark">Target Groups:
+          <span class="badge bg-light text-dark">🎯 Target Groups:
             {{ form_data.getlist('target_group') | join(', ') }}</span>
         </div>
         {% endif %}
         {% if form_data.get('gender') %}
         <div class="col-auto">
-          <span class="badge bg-light text-dark">Gender: {{ form_data.get('gender') }}</span>
+          <span class="badge bg-light text-dark">👥 Gender: {{ form_data.get('gender') }}</span>
         </div>
         {% endif %}
       </div>
 
       <div class="mb-3 mt-3">
-        <h5>{{ courses|length }} courses found</h5>
+        <h5>✨ {{ courses|length }} courses found</h5>
       </div>
     </div>
   </form>
@@ -122,15 +122,15 @@
   <table class="table table-bordered table-hover mt-4">
     <thead class="table-light">
       <tr>
-        <th>Course Title</th>
-        <th>District</th>
-        <th>Location</th>
-        <th>Price (€)</th>
-        <th>Course Duration</th>
-        <th>Session Times</th>
-        <th>No. of Sessions</th>
-        <th>Link</th>
-        <th>Sponsored</th>
+        <th>Course Title 📝</th>
+        <th>District 🏘️</th>
+        <th>Location 📍</th>
+        <th>Price (€) 💶</th>
+        <th>Course Duration ⏰</th>
+        <th>Session Times 🕒</th>
+        <th>No. of Sessions #️⃣</th>
+        <th>Link 🔗</th>
+        <th>Sponsored ⭐</th>
       </tr>
     </thead>
     <tbody>
