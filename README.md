@@ -203,8 +203,7 @@ flask_app/
 │       ├-- matching.py
 │       └-- platform_ranker.py
 ```
-## Testing
-The test cases for this project are located in `test_algorithm.py`.
+- The test cases for this project are located in `test_algorithm.py`.
 ---
 
 ## Authors
