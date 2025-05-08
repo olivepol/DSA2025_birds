@@ -1,6 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ title }}</h1>
-    <p>We are a group of enthusiastic Hertie students in Data Science for Public Policy. We want to provide english speaking Berliners an opportunity to use the amazing offers by Volkshochschule Berlin. Additionally we provide thought throuh filter possiblities to find the course which best matches your interest.</p>
-    <p>Have fun using the app and enjoy your course!</p>
-    {% endblock %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>{{ title }} 👋</h1>
+                <p>🎓 We are a group of enthusiastic Hertie students in Data Science for Public Policy. We want to provide english speaking Berliners an opportunity to use the amazing offers by Volkshochschule Berlin. Additionally we provide sophisticated filter possiblities to find the course which best matches your interest! 🎯</p>
+                <p>🌟 Have fun using the app and enjoy your course! 🎊</p>
+                <p>Deep, Elena, Fanus, Hanna, Matheus, Oliver, Padma </p>
+                <p class="mt-4">
+                    <i class="bi bi-github"></i> 
+                    <a href="https://github.com/olivepol/DSA2025_birds" target="_blank" class="text-decoration-none">
+                        Check out our GitHub repository
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='img/img2.jpeg') }}" alt="Education Illustration" class="img-fluid" style="max-height: 400px;">
+            </div>
+        </div>
+    </div>
+{% endblock %}

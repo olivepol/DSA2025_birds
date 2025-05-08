@@ -45,7 +45,7 @@ def course_list():
             )
 
         except Exception as e:
-            error_msg = f"Search failed: {e}"
+            error_msg = f"Hey, one last thing: {e}"
             empty_df = pd.DataFrame()
             return render_template(
                 "courses.html",

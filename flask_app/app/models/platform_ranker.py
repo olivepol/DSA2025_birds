@@ -35,7 +35,7 @@ class PlatformPreferenceRanker:
         self.gender_col = 'gap_to_80_percent_women' if self.user_gender == 'female' else 'gap_to_80_percent_men'
 
         if not self.user_gender or not selected_target_groups:
-            raise ValueError("Please fill in fields for gender and groups you identify with before proceeding.")
+            raise ValueError("Please indicate at least your Gender, so we can find the best courses for you.")
 
         self.selected_target_groups = selected_target_groups.copy()
 
