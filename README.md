@@ -1,11 +1,3 @@
-# DSA2025_birds
-
-## Data Structures and Algorithms
-
-*We will build the most beautiful app you have ever seen – watch and see!*
-
----
-
 # VHS Course Matcher
 
 **VHS Course Matcher** is a web application that helps users interact with the **Volkshochschule Berlin (VHS)** course database in English. It helps users discover and match with courses based on their interests, budget, and identity preferences, while also aligning with the platform's goals—like filling under-enrolled or sponsored courses and promoting diversity in course participation.
